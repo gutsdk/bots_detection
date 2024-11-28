@@ -1,1 +1,4 @@
 *.txt
+wpf_gui/.vs
+wpf_gui/bin
+wpf_gui/obj
