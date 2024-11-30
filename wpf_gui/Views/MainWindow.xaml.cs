@@ -1,10 +1,8 @@
-﻿using System;
-using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Net.Http;
 using Newtonsoft.Json;  // Для парсинга JSON
 using System.Windows;
 
-namespace wpf_gui
+namespace wpf_gui.Views
 {
     public partial class MainWindow : Window
     {
@@ -33,10 +31,12 @@ namespace wpf_gui
                 }
                 else
                 {
+                    //  Здесь требуется передать данные о пользователе в объект класса Filter, который уже в свою очередь вернет результат: Бот или не бот
+
                     // Выводим информацию о пользователе
-                    userInfoTextBlock.Text = $"Name: {userData.response[0].first_name} {userData.response[0].last_name}\n" +
-                                             $"City: {userData.response[0].city.title}\n" +
-                                             $"Followers: {userData.response[0].followers_count}";
+                    //userInfoTextBlock.Text = $"Name: {userData.response[0].first_name} {userData.response[0].last_name}\n" +
+                    //                         $"City: {userData.response[0].city.title}\n" +
+                    //                         $"Followers: {userData.response[0].followers_count}";
                 }
             }
             catch (HttpRequestException ex)

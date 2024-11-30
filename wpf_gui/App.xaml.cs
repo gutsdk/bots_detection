@@ -1,6 +1,7 @@
 ﻿using System.Configuration;
 using System.Data;
 using System.Windows;
+using wpf_gui.Views;
 
 namespace wpf_gui
 {
