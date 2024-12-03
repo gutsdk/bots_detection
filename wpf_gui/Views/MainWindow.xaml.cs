@@ -29,8 +29,22 @@ namespace wpf_gui.Views
                 else
                 {
                     userInfoTextBlock.Text = $"Имя пользователя: {user.FirstName}\nФамилия: {user.LastName}\nГород проживания: {user.City.Title}\nДата рождения: {user.BDate}";
-                    
 
+                    if (user.Verified || user.IsVerified)
+                    {
+                        userInfoTextBlock.Text += user.Verified ? "\n\nПользователь верифицирован" : "\n\nПользователь подвержден";
+                    }
+                    else
+                    {
+                        if (user.Deactivated.Length < 1)
+                        {
+                            // filter
+                        }
+                        else
+                        {
+                            userInfoTextBlock.Text += user.Deactivated == "deleted" ? $"\n\nПользователь удалён" : $"\n\nПользователь заблокирован";
+                        }
+                    }
                 }
             }
             catch (HttpRequestException ex)

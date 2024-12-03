@@ -19,13 +19,10 @@ def get_user_info():
     user_id = request.args.get('user_id')
     user_fields = (
                     "activities,about,books,bdate,"
-                    "career,connections,contacts,city,domain,education,exports,"
-                    "followers_count,has_photo,has_mobile,home_town,"
-                    "sex,schools,screen_name,status,verified,games,interests,"
-                    "last_seen,maiden_name,"
-                    "military,movies,music,nickname,occupation,online,personal,"
-                    "relation,relatives,timezone,tv,"
-                    "universities,is_verified,counters")
+                    "career,city,counters,country,"
+                    "education,games,has_mobile,has_photo,interests,is_verified,"
+                    "last_seen,military,movies,music,occupation,personal,"
+                    "quotes,relation,schools,sex,site,status,universities,verified")
     user_data = get_user_data(user_id, user_fields)
 
     if "error" in user_data:
