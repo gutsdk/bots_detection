@@ -1,12 +1,14 @@
 ﻿using System.Net.Http;
 using Newtonsoft.Json;  // Для парсинга JSON
 using System.Windows;
+using wpf_gui.Models;
+using wpf_gui.Controlllers;
+using System.Text.RegularExpressions;
 
 namespace wpf_gui.Views
 {
     public partial class MainWindow : Window
     {
-        private static readonly HttpClient _httpClient = new HttpClient();
         public MainWindow()
         {
             InitializeComponent();
@@ -17,32 +19,33 @@ namespace wpf_gui.Views
 
             try
             {
-                HttpResponseMessage responseMessage = await _httpClient.GetAsync($"http://localhost:5000/get_user_info?user_id={userId}");
+                var serverVKResponse = new ServerVKResponse(new HttpClient());
+                var user = new User(await serverVKResponse.GetUserInfoAsync(userId));
 
-                responseMessage.EnsureSuccessStatusCode();
-
-                string responseBody = await responseMessage.Content.ReadAsStringAsync();
-
-                var userData = JsonConvert.DeserializeObject<dynamic>(responseBody);
-
-                if (userData.error != null)
+                if (user == null)
                 {
-                    userInfoTextBlock.Text = $"Error: {userData.error}";
+                    throw new Exception("Нет данных");
                 }
                 else
                 {
-                    //  Здесь требуется передать данные о пользователе в объект класса Filter, который уже в свою очередь вернет результат: Бот или не бот
+                    userInfoTextBlock.Text = $"Имя пользователя: {user.FirstName}\nФамилия: {user.LastName}\nГород проживания: {user.City.Title}\nДата рождения: {user.BDate}";
+                    
 
-                    // Выводим информацию о пользователе
-                    //userInfoTextBlock.Text = $"Name: {userData.response[0].first_name} {userData.response[0].last_name}\n" +
-                    //                         $"City: {userData.response[0].city.title}\n" +
-                    //                         $"Followers: {userData.response[0].followers_count}";
                 }
             }
             catch (HttpRequestException ex)
             {
-                MessageBox.Show($"Request error: {ex.Message}");
+                MessageBox.Show($"Ошибка запроса: {ex.Message}");
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Возникла следующая ошибка: {ex.Message}");
+            }
+        }
+        private void userIdTextBox_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }
