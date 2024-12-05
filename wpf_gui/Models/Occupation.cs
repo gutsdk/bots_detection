@@ -1,9 +1,22 @@
 ﻿namespace wpf_gui.Models
 {
-    public class Occupation
+    internal class Occupation
     {
-        public string Type { get; set; }
-        public int Id { get; set; }
-        public string Name { get; set; }
+        internal string Type { get; set; }
+        internal int Id { get; set; }
+        internal string Name { get; set; }
+
+        public Occupation()
+        {
+            Type = string.Empty;
+            Id = 0;
+            Name = string.Empty;
+        }
+        public Occupation(string type, int id, string name)
+        {
+            Type = type;
+            Id = id;
+            Name = name;
+        }
     }
 }

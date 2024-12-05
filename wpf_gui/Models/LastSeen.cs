@@ -1,8 +1,19 @@
 ﻿namespace wpf_gui.Models
 {
-    public class LastSeen
+    internal class LastSeen
     {
-        public int Time {  get; set; }
-        public int Platform { get; set; }
+        internal int Time {  get; set; }
+        internal int Platform { get; set; }
+
+        public LastSeen()
+        {
+            Time = 0;
+            Platform = 0;
+        }
+        public LastSeen(int time, int platform)
+        {
+            Time = time;
+            Platform = platform;
+        }
     }
 }

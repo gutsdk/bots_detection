@@ -1,8 +1,20 @@
 ﻿namespace wpf_gui.Models
 {
-    public class City
+    internal class City
     {
-        public int Id { get; set; }
-        public string Title { get; set; }
+        internal int Id { get; set; }
+        internal string Title { get; set; }
+
+        public City()
+        {
+            Id = 0;
+            Title = string.Empty;
+        }
+
+        public City(int id, string title)
+        {
+            Id = id;
+            Title = title;
+        }
     }
 }

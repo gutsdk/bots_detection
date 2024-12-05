@@ -1,38 +1,38 @@
 ﻿namespace wpf_gui.Models
 {
-    public class User
+    internal class User
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string BDate { get; set; }
-        public string Deactivated {  get; set; }
-        public bool IsClosed { get; set; }
-        public string About { get; set; }
-        public string Activities { get; set; }
-        public string Books { get; set; }
-        public string Games { get; set; }
-        public bool HasMobile { get; set; }
-        public bool HasPhoto { get; set; }
-        public string Interests { get; set; }
-        public string Movies { get; set; }
-        public string Music { get; set; }
-        public string Quotes { get; set; }
-        public int Relation {  get; set; }
-        public int Sex { get; set; }
-        public string Site { get; set; }
-        public string Status { get; set; }
-        public bool Verified { get; set; } // Верифицированная страница
-        public bool IsVerified { get; set; } // Подвержденная страница
-        public City City { get; set; }
-        public LastSeen LastSeen { get; set; }
-        public Counters Counters { get; set; }
-        public Country Country { get; set; }
-        public Occupation Occupation { get; set; }
-        public Personal Personal { get; set; }
-        public List<Career> Career { get; set; }
-        public List<Military> Militaries { get; set; }
-        public List<School> Schools { get; set; }
-        public List<University> Universities { get; set; }
+        internal string FirstName { get; set; }
+        internal string LastName { get; set; }
+        internal string BDate { get; set; }
+        internal string Deactivated {  get; set; }
+        internal bool IsClosed { get; set; }
+        internal string About { get; set; }
+        internal string Activities { get; set; }
+        internal string Books { get; set; }
+        internal string Games { get; set; }
+        internal bool HasMobile { get; set; }
+        internal bool HasPhoto { get; set; }
+        internal string Interests { get; set; }
+        internal string Movies { get; set; }
+        internal string Music { get; set; }
+        internal string Quotes { get; set; }
+        internal int Relation {  get; set; }
+        internal int Sex { get; set; }
+        internal string Site { get; set; }
+        internal string Status { get; set; }
+        internal bool Verified { get; set; } // Верифицированная страница
+        internal bool IsVerified { get; set; } // Подвержденная страница
+        internal City City { get; set; }
+        internal LastSeen LastSeen { get; set; }
+        internal Counters Counters { get; set; }
+        internal Country Country { get; set; }
+        internal Occupation Occupation { get; set; }
+        internal Personal Personal { get; set; }
+        internal List<Career> Career { get; set; }
+        internal List<Military> Militaries { get; set; }
+        internal List<School> Schools { get; set; }
+        internal List<University> Universities { get; set; }
 
         // Конструктор, принимающий dynamic
         public User(dynamic userData)
@@ -60,15 +60,7 @@
             IsVerified = userData.is_verified ?? false;
 
             // Инициализация города
-            City = userData.city != null ? new City
-            {
-                Id = userData.city.id,
-                Title = userData.city.title
-            } : new City
-            {
-                Id = 0,
-                Title = ""
-            };
+            City = userData.city != null ? new City((int)(userData.city.id ?? 0), (string)(userData.city.title ?? string.Empty)) : new City();
 
             // Инициализация списка карьеры
             Career = new List<Career>();
@@ -76,78 +68,24 @@
             {
                 foreach (var career in userData.career)
                 {
-                    Career.Add(new Career
-                    {
-                        CityId = career.city_id,
-                        Company = career.company,
-                        Position = career.position,
-                        From = career.from,
-                        Until = career.until
-                    });
+                    Career.Add(new Career((int)(career.city_id ?? 0), (string)(career.company ?? string.Empty), (string)(career.position ?? string.Empty), (int)(career.from ?? 0), (int)(career.until ?? 0)));
                 }
             }
             else
             {
-                Career.Add(new Career
-                {
-                    CityId = 0,
-                    Company = "",
-                    Position = "",
-                    From = 0,
-                    Until = 0
-                });
+                Career.Add(new Career());
             }
 
             // Инициализация счётчиков
-            Counters = userData.counters != null ? new Counters
-            {
-                Albums = userData.counters.albums ?? 0,
-                Videos = userData.counters.videos ?? 0,
-                Audios = userData.counters.audios ?? 0,
-                Photos = userData.counters.photos ?? 0,
-                Notes = userData.counters.notes ?? 0,
-                Friends = userData.counters.friends ?? 0,
-                Gifts = userData.counters.gifts ?? 0,
-                Groups = userData.counters.groups ?? 0,
-                Followers = userData.counters.followers ?? 0,
-                Pages = userData.counters.pages ?? 0,
-                Subscriptions = userData.counters.subscriptions ?? 0
-            } : new Counters
-            {
-                Albums = 0,
-                Videos = 0,
-                Audios = 0,
-                Photos = 0,
-                Notes = 0,
-                Friends = 0,
-                Gifts = 0,
-                Groups = 0,
-                Followers = 0,
-                Pages = 0,
-                Subscriptions = 0
-            };
+            Counters = userData.counters != null ? new Counters((int)(userData.counters.albums ?? 0), (int)(userData.counters.videos ?? 0), (int)(userData.counters.audios ?? 0),
+                (int)(userData.counters.photos ?? 0), (int)(userData.counters.notes ?? 0), (int)(userData.counters.friends ?? 0), (int)(userData.counters.gifts ?? 0), (int)(userData.counters.groups ?? 0),
+                (int)(userData.counters.followers ?? 0), (int)(userData.counters.pages ?? 0), (int)(userData.counters.subscriptions ?? 0)) : new Counters();
 
             // Инициализация страны
-            Country = userData.country != null ? new Country
-            {
-                Id = userData.country.id,
-                Title = userData.country.title
-            } : new Country
-            {
-                Id = 0,
-                Title = ""
-            };
+            Country = userData.country != null ? new Country((int)(userData.country.id ?? 0), (string)(userData.country.title ?? string.Empty)) : new Country();
 
             // Последнее время онлайн
-            LastSeen = userData.last_seen != null ? new LastSeen
-            {
-                Time = userData.last_seen.time,
-                Platform = userData.last_seen.platform
-            } : new LastSeen
-            {
-                Time = 0,
-                Platform = 0
-            };
+            LastSeen = userData.last_seen != null ? new LastSeen((int)(userData.last_seen.time ?? 0), (int)(userData.last_seen.platform ?? 0)) : new LastSeen();
 
             // Инициализация службы
             Militaries = new List<Military>();
@@ -155,61 +93,22 @@
             {
                 foreach (var military in userData.military)
                 {
-                    Militaries.Add(new Military
-                    {
-                        UnitId = military.unit_id,
-                        Unit = military.unit,
-                        From = military.from,
-                        Until = military.until
-                    });
+                    Militaries.Add(new Military((string)(military.unit ?? string.Empty), (int)(military.unit_id ?? 0), (int)(military.from ?? 0), (int)(military.until ?? 0)));
                 }
             }
             else
             {
-                Militaries.Add(new Military
-                {
-                    UnitId = 0,
-                    Unit = "",
-                    From = 0,
-                    Until = 0
-                });
+                Militaries.Add(new Military());
             }
 
             // Род занятия
-            Occupation = userData.occupation != null ? new Occupation
-            {
-                Type = userData.occupation.type,
-                Id = userData.occupation.id,
-                Name = userData.occupation.name
-            } : new Occupation
-            {
-                Type = "",
-                Id = 0,
-                Name = ""
-            };
+            Occupation = userData.occupation != null ? new Occupation((string)(userData.occupation.type ?? string.Empty), (int)(userData.occupation.id ?? 0), 
+                (string)(userData.occupation.name ?? string.Empty)) : new Occupation();
 
             // Персоналий
-            Personal = userData.personal != null ? new Personal
-            {
-                Political = userData.personal.political,
-                Langs = userData.personal.langs,
-                Religion = userData.personal.religion,
-                InspiredBy = userData.personal.inspired_by,
-                PeopleMain = userData.personal.people_main,
-                LifeMain = userData.personal.life_main,
-                Smoking = userData.personal.smoking,
-                Alcohol = userData.personal.alcohol
-            } : new Personal
-            {
-                Political = 0,
-                Langs = new List<string>(),
-                Religion = "",
-                InspiredBy = "",
-                PeopleMain = 0,
-                LifeMain = 0,
-                Smoking = 0,
-                Alcohol = 0
-            };
+            Personal = userData.personal != null ? new Personal((int)(userData.personal.political ?? 0), (string)(userData.personal.religion ?? string.Empty), 
+                (string)(userData.personal.inspired_by ?? string.Empty), (int)(userData.personal.people_main ?? 0), (int)(userData.personal.life_main ?? 0),
+                (int)(userData.personal.smoking ?? 0), (int)(userData.personal.alcohol ?? 0), (List<string>)(userData.personal.langs ?? new List<string>())) : new Personal();
 
             // Инициализация шкьол
             Schools = new List<School>();
@@ -217,34 +116,14 @@
             {
                 foreach (var school in userData.schools)
                 {
-                    Schools.Add(new School
-                    {
-                        Id = school.id,
-                        City = school.city,
-                        Name = school.name,
-                        YearFrom = school.year_from,
-                        YearTo = school.year_to,
-                        YearGraduated = school.year_graduated,
-                        Speciality = school.speciality,
-                        Type = school.type,
-                        TypeStr = school.type_str
-                    });
+                    Schools.Add(new School((int)(school.id ?? 0), (int)(school.city ?? 0), (string)(school.name ?? string.Empty), (int)(school.year_from ?? 0), 
+                        (int)(school.year_to ?? 0), (int)(school.year_graduated ?? 0), (string)(school.speciality ?? string.Empty), (int)(school.type ?? 0), 
+                        (string)(school.type_str ?? string.Empty)));
                 }
             }
             else
             {
-                Schools.Add(new School
-                {
-                    Id = 0,
-                    City = 0,
-                    Name = "",
-                    YearFrom = 0,
-                    YearTo = 0,
-                    YearGraduated = 0,
-                    Speciality = "",
-                    Type = 0,
-                    TypeStr = ""
-                });
+                Schools.Add(new School());
             }
 
             // Инициализация списка карьеры
@@ -253,36 +132,14 @@
             {
                 foreach (var university in userData.universities)
                 {
-                    Universities.Add(new University
-                    {
-                        Id = university.id,
-                        City = university.city,
-                        Name = university.name,
-                        Faculty = university.faculty,
-                        FacultyName = university.faculty_name,
-                        Chair = university.chair,
-                        ChairName = university.chair_name,
-                        Graduation = university.graduation,
-                        EducationForm = university.education_form,
-                        EducationStatus = university.education_status
-                    });
+                    Universities.Add(new University((int)(university.id ?? 0), (int)(university.city ?? 0), (string)(university.name ?? string.Empty), (int)(university.faculty ?? 0),
+                        (string)(university.faculty_name ?? string.Empty), (int)(university.chair ?? 0), (string)(university.chair_name ?? string.Empty), (int)(university.graduation ?? 0), 
+                        (string)(university.education_form ?? string.Empty), (string)(university.education_status ?? string.Empty)));
                 }
             }
             else
             {
-                Universities.Add(new University
-                {
-                    Id = 0,
-                    City = 0,
-                    Name = "",
-                    Faculty = 0,
-                    FacultyName = "",
-                    Chair = 0,
-                    ChairName = "",
-                    Graduation = 0,
-                    EducationForm = "",
-                    EducationStatus = ""
-                });
+                Universities.Add(new University());
             }
         }
     }
