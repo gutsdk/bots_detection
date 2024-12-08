@@ -11,7 +11,8 @@ api_version = "5.199"
 file.close()
 
 def get_user_data(user_id, fields):
-    response = requests.get(f'https://api.vk.com/method/users.get?user_ids={user_id}&fields={fields}&access_token={access_token}&v={api_version}') 
+    response = requests.get(f"https://api.vk.com/method/users.get?user_ids={user_id}&fields={fields}"
+                            f"&access_token={access_token}&v={api_version}") 
     return response.json()
 
 @app.route('/get_user_info', methods=['GET'])
