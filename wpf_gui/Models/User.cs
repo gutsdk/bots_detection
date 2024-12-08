@@ -1,4 +1,6 @@
-﻿namespace wpf_gui.Models
+﻿using Newtonsoft.Json.Linq;
+
+namespace wpf_gui.Models
 {
     internal class User
     {
@@ -108,7 +110,7 @@
             // Персоналий
             Personal = userData.personal != null ? new Personal((int)(userData.personal.political ?? 0), (string)(userData.personal.religion ?? string.Empty), 
                 (string)(userData.personal.inspired_by ?? string.Empty), (int)(userData.personal.people_main ?? 0), (int)(userData.personal.life_main ?? 0),
-                (int)(userData.personal.smoking ?? 0), (int)(userData.personal.alcohol ?? 0), (List<string>)(userData.personal.langs ?? new List<string>())) : new Personal();
+                (int)(userData.personal.smoking ?? 0), (int)(userData.personal.alcohol ?? 0), ((JArray)userData.personal.langs).ToObject<List<string>>() ?? new List<string>()) : new Personal();
 
             // Инициализация шкьол
             Schools = new List<School>();
