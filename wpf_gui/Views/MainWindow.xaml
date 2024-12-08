@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:wpf_gui.Views"
         mc:Ignorable="d"
-        Title="VK Бот-чекер" Height="450" Width="800">
+        Title="VK Бот-чекер" Height="450" Width="600">
     <Grid>
-        <TextBox x:Name="userIdTextBox" PreviewTextInput="userIdTextBox_PreviewTextInput" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 10, 0, 0" Width="200"/>
-        <Button x:Name="GetUserInfoButton" Content="Проверить пользователя" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 40, 0, 0" Width="200" Click="GetUserInfoButton_Click"/>
+        <TextBox x:Name="userIdTextBox" PreviewTextInput="userIdTextBox_PreviewTextInput" DataObject.Pasting="userIdTextBox_Pasting" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 10, 0, 0" Width="200"/>
+        <Button x:Name="getUserInfoButton" Content="Проверить пользователя" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 40, 0, 0" Height="30" Width="200" Click="getUserInfoButton_Click"/>
         <TextBlock x:Name="userInfoTextBlock" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 80, 0, 0" Width="400"/>
     </Grid>
 </Window>
